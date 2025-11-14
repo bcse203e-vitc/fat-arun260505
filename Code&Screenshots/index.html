@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Bill Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Water Bill Calculator</h1>
+    <input type="number" id="kiloliters" placeholder="Enter the number of kiloliters used">
+    <button id="calculate-button">Calculate and Display Bill</button>
+    <p id="total-bill"></p>
+
+    <script>
+        let totalBill = 0;
+        
+        const totalBillElement = document.getElementById('total-bill');
+
+        function calculateBill(kl) {
+            let bill = 0;
+            if (kl <= 15) {
+                bill = kl * 2;
+            } else if (kl <= 35) {
+                bill = 15 * 2 + (kl - 15) * 5;
+            } else {
+                bill = 15 * 2 + 20 * 5 + (kl - 35) * 10;
+            }
+            return bill + 50;
+        }
+
+        function calculateAndDisplayBill() {
+            const klInput = document.getElementById('kiloliters');
+            if (!klInput.value.match(/^(\d+\.?\d*)?$/)) {
+                alert('Please enter a valid number of kiloliters.');
+                return;
+            }
+            const kl = parseFloat(klInput.value);
+            if (isNaN(kl) || kl < 0) {
+                alert('Please enter a non-negative value for the number of kiloliters.');
+                return;
+            }
+            const bill = calculateBill(kl);
+            totalBill += bill;
+            totalBillElement.innerHTML = `Total Bill: ₹${totalBill}`;
+        }
+
+        document.getElementById('calculate-button').addEventListener('click', calculateAndDisplayBill);
+
+        
+        totalBillElement.innerHTML = `Total Bill: ₹${totalBill}`;
+    </script>
+</body>
+</html>
